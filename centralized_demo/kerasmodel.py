@@ -53,6 +53,38 @@ def construct_model():
     return model
 
 
+# def construct_model():
+#     model = Sequential()
+#     model.add(Conv2D(32, (3, 3), padding='same',
+#                  input_shape=[32,32,3]))
+#     model.add(Activation('relu'))
+#     model.add(Conv2D(32, (3, 3)))
+#     model.add(Activation('relu'))
+#     model.add(MaxPooling2D(pool_size=(2, 2)))
+#     model.add(Dropout(0.25))
+#
+#     model.add(Conv2D(64, (3, 3), padding='same'))
+#     model.add(Activation('relu'))
+#     model.add(Conv2D(64, (3, 3)))
+#     model.add(Activation('relu'))
+#     model.add(MaxPooling2D(pool_size=(2, 2)))
+#     model.add(Dropout(0.25))
+#
+#     model.add(Flatten())
+#     model.add(Dense(50))
+#     model.add(BatchNormalization())
+#     model.add(Activation('relu'))
+#     model.add(Dropout(0.5))
+#     model.add(Dense(10))
+#     model.add(Activation('softmax'))
+#
+#     opt = keras.optimizers.Adam(learning_rate=learning_rate, decay=decay)
+#     model.compile(loss='categorical_crossentropy',
+#                        optimizer=opt,
+#                        metrics=['accuracy'])
+#
+#     return model
+
 class ANN_Model:
 
     def __init__(self, graph=None):
@@ -65,8 +97,8 @@ class ANN_Model:
         self.training_calls = 0
         self.training_history = []
 
-    def fit(self, x_data, y_data, x_val=None, y_val=None, batch_size=32, epochs=10, data_augmentation=True,
-            validation_split=0.1, verbose=2):
+    def fit(self, x_data, y_data, x_val=None, y_val=None, batch_size=32, epochs=10, data_augmentation=True, validation_split=0.1, verbose=2,
+            ):
 
         if x_val is None:
             new_ind = np.arange(len(x_data))
@@ -81,6 +113,10 @@ class ANN_Model:
         else:
             x_train = x_data
             y_train = y_data
+
+
+
+        print("x_train shape: ", x_train.shape, ", y_train shape: ", y_train.shape)
 
 
         h = []
@@ -134,7 +170,7 @@ class ANN_Model:
 
         self.training_calls += 1
         self.training_history += [h]
-        return h.history
+        return h
 
     def predict(self, x_data):
         return self.model.predict(x_data)

@@ -27,7 +27,7 @@ if __name__ == '__main__':
     if save_model_id == 'None':
         save_model_id = None
 
-    mk = json.load(open('miniokeys3.json'))
+    mk = json.load(open('miniokeys.json'))
 
     client = Minio(endpoint=mk['ClientUrl'],
                    access_key=mk['MinioAccessKey'],
@@ -37,8 +37,16 @@ if __name__ == '__main__':
 
     x_train, y_train, x_val, y_val = read_data(client, datasort='train', split_validation=True, validation_split=0.1)
 
+    
+    print("x_train shape: ", x_train.shape)
+    print("y_train shape: ", y_train.shape)
+    print("x_test shape: ", x_val.shape)
+    print("y_test shape: ", y_val.shape)
+
+    
     if load_model_id is not None:
-        model = load_model(client, load_model_id)
+        model = ANN_Model()
+        model.model = load_model(client, load_model_id)
     else:
         model = ANN_Model()
 
@@ -54,13 +62,12 @@ if __name__ == '__main__':
 
     url = 'https://platform.demo.scaleout.se/api/models/'
 
-    model_name = 'afternoon'
     model_description = 'keras sequential model'
     model_url = os.path.join('https://minio.test.platform.demo.scaleout.se/minio/models',)
-    project_id = '8'
+    project_id = '11'
     myobj = {
         'uid': model_uid,
-        'name': model_name,
+        'name': save_model_id,
         'description': model_description,
         'url': model_url,
         'project': project_id,
