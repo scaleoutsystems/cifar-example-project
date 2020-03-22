@@ -4,8 +4,8 @@ from minio import Minio
 from sklearn.metrics import classification_report
 
 minioClient = Minio('minio.generators.platform.demo.scaleout.se',
-                    access_key='GXfzlBNHX2dALokXArRm',
-                    secret_key='yI5pGGjgLBB62JOeCYMOHrsTOH9C2mYp1NhkB9r2',
+                    access_key='',
+                    secret_key='',
                     secure=False)
 
 
